@@ -13,14 +13,20 @@ const MESSAGES = [
 ];
 
 
-const getRandomLikes = () => getRandomInt(15, 200);
+function getRandomLikes() {
+  const likes = getRandomInt(15, 200);
+  return likes;
+}
 
-const getRandomElement = (arr) => arr[getRandomInt(0, arr.length - 1)];
+function getRandomElement(arr) {
+  const Element = arr[getRandomInt(0, arr.length - 1)];
+  return Element;
+}
 
-const getId = (() => {
+function getId() {
   let id = 1;
   return () => id++;
-})();
+}
 
 
 function getCommentId() {
@@ -43,16 +49,19 @@ function generateComment() {
   };
 }
 
-function generationDescription() {
+function generateDescription() {
+  const comments = Array.from({length: getRandomInt(0, 2)}, generateComment);
+  const id = getCommentId();
   return {
-    id: getCommentId(),
-    url: 'photos/${i}.jpg',
+    id: id,
+    url: `photos/${id}.jpg`,
     description: getRandomElement(DESCRIPTIONS),
     likes: getRandomLikes(),
-    comments: getRandomElement(MESSAGES)
+    comments: comments
   };
 }
 
-const description = getRandomElement(DESCRIPTIONS);
+const description = Array.from({length: PHOTOS_COUNT}, generateDescription);
 
-export {generationDescription};
+export {description};
+
