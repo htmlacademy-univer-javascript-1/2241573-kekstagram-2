@@ -1,5 +1,4 @@
-import './data.js';
-import {generationDescription} from './data.js';
+import {description} from './data.js';
 
-console.log(generationDescription());
+console.log(description);
 

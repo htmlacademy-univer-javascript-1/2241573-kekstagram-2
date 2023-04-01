@@ -6,8 +6,6 @@ function getRandomInt(from, to)
  * @returns {int} - случаное число
  */
 {
-  const fromTemp = from;
-  const toFrom = to;
 
   if (from < 0 || to < 0) {
     throw new RangeError('Числа в диапазоне должны быть положительными');
@@ -24,7 +22,7 @@ function getRandomInt(from, to)
     if (from > to) {
       [from, to] = [to, from];
     }
-    return Math.round(Math.random() * (toFrom - fromTemp) + fromTemp);
+    return Math.round(Math.random() * (to - from) + from);
   }
 
 }
@@ -35,7 +33,7 @@ const isCorrectLength = (str, maxLenght) => str.length <= maxLenght;
  * Проверка максимальной длины строки
  * @param {str} str - длина строки
  * @param {str} maxLenght - максимальная длина строки
- * @returns {str} - строка
+ * @returns {int} - true либо false
  */
 
 export {getRandomInt};
