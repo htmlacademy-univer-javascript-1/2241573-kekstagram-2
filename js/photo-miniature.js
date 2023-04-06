@@ -1,3 +1,5 @@
+import {showBigPhoto} from './big-photo.js';
+
 const pictureTemp = document.querySelector('#picture');
 const pictureElement = document.querySelector('.pictures');
 
@@ -9,6 +11,10 @@ function createPhotoMiniature(description) {
   for ({url, likes, comments} of description) {
     const picture = pictureTemp.cloneNode(true);
     picture.querySelector('picture_img').src = url;
+    picture.querySelector('picture_img').addEventListener('click', (ev) => {
+      ev.preventDefault();
+      showBigPhoto(description);
+    });
     picture.querySelector('.picture__likes').textContent = likes;
     picture.querySelector('.picture__comments').textContent = comments;
     pictureListFragment.appendChild(picture);
