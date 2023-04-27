@@ -8,10 +8,10 @@ function createPhotoMiniature(description) {
 
   const pictureListFragment = document.createDocumentFragment();
 
-  for ({url, likes, comments} of description) {
+  const {url, likes, comments} = description => {
     const picture = pictureTemp.cloneNode(true);
-    picture.querySelector('picture_img').src = url;
-    picture.querySelector('picture_img').addEventListener('click', (ev) => {
+    picture.querySelector('.picture_img').src = url;
+    picture.querySelector('.picture_img').addEventListener('click', (ev) => {
       ev.preventDefault();
       showBigPhoto(description);
     });
