@@ -5,7 +5,11 @@ bigPicture.querySelector('#picture-cancel').addEventListener('click', closeBigPi
 const escapePressed = (ev) => ev.key === 'Escape' && closeBigPicture();
 
 const AVATAR_IMAGE_SIZE = 35;
+const FIVE_COMMENTS = 5;
 
+const bigPhotoCansel = document.querySelector('#picture-cancel');
+const socialCommentsCount = document.querySelector('.social__comment-count');
+const commentsCount = document.querySelector('.comments-count');
 
 function createBigPhoto({url, likes, description, comments}) {
   bigPicture.querySelector('.big-picture__img').src = url;
@@ -22,6 +26,25 @@ function createBigPhoto({url, likes, description, comments}) {
   bigPicture.querySelector('.social__caption').textContent = description;
 
 }
+
+if (commentsCount.textContent <= FIVE_COMMENTS) {
+  socialCommentsCount.firstChild.textContent = ` ${commentsCount.textContent} из  `;
+
+  loaderButton.classList.add('hidden'); }
+if (commentsCount.textContent > FIVE_COMMENTS) {
+  socialCommentsCount.firstChild.textContent = ` ${FIVE_COMMENTS} из  `;
+  loaderButton.addEventListener('click', () => {
+    comments.slice(5).forEach((comment) => {
+      const newComment = createComment(comment);
+      commentsList.appendChild(newComment);
+    });
+    socialCommentsCount.firstChild.textContent = ` ${commentsCount.textContent} из  `;
+    loaderButton.classList.add('hidden');
+  }, { once: true });
+
+  openBigPicture();
+  bigPhotoCansel.addEventListener('click',close);
+};
 
 //Список комментариев под фотографией
 function createComment({avatar, name, message}) {
@@ -55,4 +78,22 @@ function showBigPhoto(picture) {
   document.body.classList.remove('modal-open');
 }
 
-export {showBigPhoto};
+const loaderButton = document.querySelector('.comments-loader');
+function close(){
+  activeImg.classList.add('hidden');
+  body.classList.remove('modal-open');
+  commentsLoader.classList.remove('hidden');
+  commentsList.innerHTML = '';
+  bigPhotoCansel.removeEventListener('click', close);
+}
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    activeImg.classList.add('hidden');
+    body.classList.remove('modal-open');
+    commentsLoader.classList.remove('hidden');
+    commentsList.innerHTML = '';
+  }
+});
+
+export {createBigPhoto, showBigPhoto, createComment};

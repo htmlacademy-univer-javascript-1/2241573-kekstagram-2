@@ -1,4 +1,4 @@
-const input = document.querySelector('.text__hashtags');//относится к хештегу!
+const input = document.querySelector('.text__hashtags');
 const inputComments = document.querySelector('.text__description');
 //отмена escape для хештегов и комментов
 input.addEventListener('keydown', (evt) => {
@@ -14,7 +14,7 @@ inputComments.addEventListener('keydown', (evt) => {
   }
 });
 //валидация хештегов
-//ПРОВЕРКА ПО СИМВОЛАМ
+//Проверка символов
 function isEveryHashtagSymbolsValid(elem) {
   const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
   return re.test(elem);
@@ -25,13 +25,13 @@ function isHashtagSymbolsValid() {
   else { return false; }
 }
 
-//проверка что их не больше 5
+//проверка, что их не больше 5
 function isAmountValid() {
   const hashtags = input.value.toLowerCase().split(' ');
   if (hashtags.length <= 5) { return true; }
   else { return false; }
 }
-//прверка что каждый хештег уникален
+//Проверка уникальности хештега
 function areHashtagsUnique() {
   const hashtags = input.value.toLowerCase().trim().split(' ');
   const uniqueHashTagArray = new Set(hashtags);
@@ -48,4 +48,4 @@ function hashtagsValid(value) {
   }
   else { return false; }
 }
-export{input,hashtagsValid};
+export{input, hashtagsValid, inputComments};
