@@ -6,11 +6,9 @@ const start = document.querySelector('.img-upload__start input');
 const photoUser = document.querySelector('#upload-file');
 
 const body=document.querySelector('body');
-const imgPreview = document.querySelector('.img-upload__preview img');
 start.onchange = function () {
   imgOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  imgPreview.src = photoUser.value;
 };
 
 const cancel = document.querySelector('.img-upload__cancel');
@@ -86,6 +84,7 @@ form.addEventListener('submit', (evt) => {
     body.classList.remove('modal-open');
     photoUser.value = '';
     input.value = '';
+    inputComments.value = '';
   }
   else if (pristine.validate()) {
     showSuccessMessageModal();

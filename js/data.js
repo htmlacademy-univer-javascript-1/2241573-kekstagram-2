@@ -19,8 +19,8 @@ function getRandomLikes() {
 }
 
 function getRandomElement(arr) {
-  const Element = arr[getRandomInt(0, arr.length - 1)];
-  return Element;
+  const element = arr[getRandomInt(0, arr.length - 1)];
+  return element;
 }
 
 function getId() {

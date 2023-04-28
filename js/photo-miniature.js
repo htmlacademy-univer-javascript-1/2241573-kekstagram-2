@@ -1,24 +1,23 @@
 import {showBigPhoto} from './big-photo.js';
 
-const pictureTemp = document.querySelector('#picture');
-const pictureElement = document.querySelector('.pictures');
+const miniaturesTemplate = document.querySelector('#picture').content.querySelector('a');
+const miniaturesList = document.querySelector('.pictures');
 
-
-function createPhotoMiniature(description) {
-
-  const pictureListFragment = document.createDocumentFragment();
-
-  const {url, likes, comments} = description => {
-    const picture = pictureTemp.cloneNode(true);
-    picture.querySelector('.picture_img').src = url;
-    picture.querySelector('.picture_img').addEventListener('click', (ev) => {
-      ev.preventDefault();
-      showBigPhoto(description);
+const createMiniatures = (description) => {
+  description.forEach((photo)=>{
+    const miniatures = miniaturesTemplate.cloneNode(true);
+    const miniaturesImg = miniatures.querySelector('.picture__img');
+    miniaturesImg.src = photo.url;
+    miniatures.querySelector('.picture__likes').textContent=photo.likes;
+    miniatures.querySelector('.picture__comments').textContent=photo.comments.length;
+    miniaturesFragment.appendChild(miniatures);
+    miniaturesImg.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      createBigPhoto(miniatures, photo.description, photo.likes, photo.comments);
     });
-    picture.querySelector('.picture__likes').textContent = likes;
-    picture.querySelector('.picture__comments').textContent = comments;
-    pictureListFragment.appendChild(picture);
-  }
+  });
+  miniaturesList.appendChild(miniaturesFragment);
+  };
+createMiniatures(numberPhotoUsers);
 
-  pictureListFragment.appendChild(pictureListFragment);
-}
+export {createMiniatures,miniaturesList}
