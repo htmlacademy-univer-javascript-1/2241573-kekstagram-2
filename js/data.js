@@ -50,7 +50,7 @@ function generateComment() {
 }
 
 function generateDescription() {
-  const comments = Array.from({length: getRandomInt(0, 2)}, generateComment);
+  const comments = Array.from({length: getRandomInt(0, 7)}, generateComment);
   const id = getCommentId();
   return {
     id: id,
