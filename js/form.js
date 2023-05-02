@@ -11,6 +11,8 @@ start.onchange = function () {
   body.classList.add('modal-open');
 };
 
+imgOverlay.classList.remove('hidden');
+body.classList.add('modal-open');
 const cancel = document.querySelector('.img-upload__cancel');
 cancel.addEventListener('click', () => {
   imgOverlay.classList.add('hidden');

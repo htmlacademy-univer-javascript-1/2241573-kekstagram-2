@@ -1,7 +1,11 @@
-import {showBigPhoto} from './big-photo.js';
+import { createBigPhoto } from './big-photo.js';
+import {description} from './data.js';
 
 const miniaturesTemplate = document.querySelector('#picture').content.querySelector('a');
 const miniaturesList = document.querySelector('.pictures');
+
+const miniaturesFragment = document.createDocumentFragment();
+
 
 const createMiniatures = (description) => {
   description.forEach((photo)=>{
@@ -17,7 +21,9 @@ const createMiniatures = (description) => {
     });
   });
   miniaturesList.appendChild(miniaturesFragment);
-  };
-createMiniatures(numberPhotoUsers);
 
-export {createMiniatures,miniaturesList}
+};
+createMiniatures(description);
+
+
+export {createMiniatures,miniaturesList};
