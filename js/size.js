@@ -1,10 +1,12 @@
+const STEP= 25;
+const SCALE_VALUE_MIN = 25;
+const SCALE_VALUE_MAX = 100;
+
 const smallerButton = document.querySelector('.scale__control--smaller');
 const biggerButton = document.querySelector('.scale__control--bigger');
 const inputScale = document.querySelector('.scale__control--value');
 const imgPreview = document.querySelector('.img-upload__preview');
-const STEP= 25;
-const scaleValueMin = 25;
-const scaleValueMax = 100;
+
 inputScale.value= `${100 }%`;
 
 
@@ -12,7 +14,7 @@ function clickSmallerButton (){
   smallerButton.addEventListener('click',() => {
     let newValue = inputScale.value.replace('%', '');
     newValue = newValue - STEP;
-    if (newValue >= scaleValueMin){ inputScale.value = `${newValue}%`;
+    if (newValue >= SCALE_VALUE_MIN){ inputScale.value = `${newValue}%`;
       imgPreview.style.transform = `scale(0.${newValue})`;
     }
   });
@@ -23,11 +25,11 @@ function clickBiggerButton() {
   biggerButton.addEventListener('click', () => {
     let newValue = inputScale.value.replace('%', '');
     newValue = Number( newValue) + STEP;
-    if (Number(newValue) < scaleValueMax) {
+    if (Number(newValue) < SCALE_VALUE_MAX) {
       inputScale.value = `${newValue}%`;
       imgPreview.style.transform = `scale(0.${newValue})`;
     }
-    if (Number(newValue) === scaleValueMax) { inputScale.value = `${newValue}%`;
+    if (Number(newValue) === SCALE_VALUE_MAX) { inputScale.value = `${newValue}%`;
       imgPreview.style.transform = 'scale(1.0)';
     }
   });
