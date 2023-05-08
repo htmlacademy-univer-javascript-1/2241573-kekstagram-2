@@ -1,6 +1,8 @@
+const SHOW_FIVE_COMMENTS = 5;
+
+
 const activeImg = document.querySelector('.big-picture');
 const body = document.querySelector('body');
-const showFiveComments = 5;
 const socialCommentsCount = document.querySelector('.social__comment-count');
 
 const bigPictureImg = document.querySelector('.big-picture__img');
@@ -18,12 +20,17 @@ const commentsLoader = document.querySelector('.comments-loader');
 const commentItem = document.querySelectorAll('.social__comment');
 
 //генерация комментария
-const createCommentPhotoUser = (commentInfo) => {
-  const commentsUsers = commentTemplate.cloneNode(true);
-  commentsUsers.querySelector('img').src=commentInfo.avatar;
-  commentsUsers.querySelector('img').alt=commentInfo.name;
-  commentsUsers.querySelector('p').textContent=commentInfo.message;
-  return commentsUsers;
+const createCommentPhotoUser = (commentsInfo) => {
+  const commentFragment = document.createDocumentFragment();
+  commentsInfo.forEach(({ avatar, name, message
+  }) => {
+    const comment = commentTemplate.cloneNode(true);
+    comment.querySelector('img').src=avatar;
+    comment.querySelector('img').alt=name;
+    comment.querySelector('p').textContent=message;
+    commentFragment.append(comment);
+  });
+  return commentFragment;
 };
 
 //функции взаимодействия с фото
@@ -50,6 +57,9 @@ document.addEventListener('keydown', (evt) => {
     commentsList.innerHTML = '';
   }
 });
+
+let arrayComments = [];
+
 // генерация открытых превьюшек
 const createBigPhoto = (miniatures, description,likes,comments) => {
   bigPictureImg.querySelector('img').src = miniatures.querySelector('.picture__img').src;
@@ -57,29 +67,35 @@ const createBigPhoto = (miniatures, description,likes,comments) => {
   likesCount.textContent=likes;
   commentsCount.textContent = miniatures.querySelector('.picture__comments').textContent;
 
-  //загрузка первых 5 комментариев сначала
-  comments.slice(0,5).forEach((comment) => {
-    const newComment = createCommentPhotoUser(comment);
-    commentsList.appendChild(newComment);
-  });
+  arrayComments=comments;
+  showFirstComments(comments);
+  loaderButton.addEventListener('click', loadingCommentsClick);
 
-  if (commentsCount.textContent <= showFiveComments) {
-    socialCommentsCount.firstChild.textContent = ` ${commentsCount.textContent} из  `;
-    loaderButton.classList.add('hidden'); }
-  if (commentsCount.textContent > showFiveComments) {
-    socialCommentsCount.firstChild.textContent = ` ${showFiveComments} из  `;
-    loaderButton.addEventListener('click', () => {
-      comments.slice(5).forEach((comment) => {
-        const newComment = createCommentPhotoUser(comment);
-        commentsList.appendChild(newComment);
-      });
-      socialCommentsCount.firstChild.textContent = ` ${commentsCount.textContent} из  `;
-      loaderButton.classList.add('hidden');
-    }, { once: true });
-
-  }
   openBigPicture();
   bigPictureCansel.addEventListener('click',close);
 };
 
-export { createBigPhoto,createCommentPhotoUser};
+//функции для загрузки комментариев
+function showFirstComments(comments) {
+  const firstComments = comments.slice(0, COMMENTS_TO_SHOW);
+  const createFirstComments = createCommentPhotoUser(firstComments);
+  socialCommentsCount.firstChild.textContent = `${firstComments.length} из  `;
+  commentsList.appendChild(createFirstComments);
+  if (firstComments.length === comments.length) {
+    loaderButton.classList.add('hidden');
+  }
+}
+function loadingCommentsClick() {
+  const afterComments = arrayComments.slice(
+    commentsList.children.length,
+    commentsList.children.length + COMMENTS_TO_SHOW,
+  );
+  const createAfterComments = createCommentPhotoUser(afterComments);
+  commentsList.appendChild(createAfterComments);
+  if (arrayComments.length === commentsList.children.length) {
+    loaderButton.classList.add('hidden');
+  }
+  socialCommentsCount.firstChild.textContent = `${commentsList.children.length} из  `;
+}
+
+export {createBigPhoto,createCommentPhotoUser};
