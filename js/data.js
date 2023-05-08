@@ -1,4 +1,4 @@
-import {getRandomInt} from './util.js';
+import {getRandomPositiveInteger} from './util.js';
 
 const PHOTOS_COUNT = 25;
 const NAMES = ['Феликс', 'Алек', 'Виктор', 'Лука', 'Винченцо'];
@@ -14,12 +14,12 @@ const MESSAGES = [
 
 
 function getRandomLikes() {
-  const likes = getRandomInt(15, 200);
+  const likes = getRandomPositiveInteger(15, 200);
   return likes;
 }
 
 function getRandomElement(arr) {
-  const element = arr[getRandomInt(0, arr.length - 1)];
+  const element = arr[getRandomPositiveInteger(0, arr.length - 1)];
   return element;
 }
 
@@ -30,27 +30,27 @@ function getId() {
 
 
 function getCommentId() {
-  const id = getRandomInt (1, 25);
+  const id = getRandomPositiveInteger (1, 25);
   return id;
 }
 
 
 function generateComment() {
   const messageText = [];
-  for (let i = 0; i < getRandomInt(1, 2); i++) {
+  for (let i = 0; i < getRandomPositiveInteger(1, 2); i++) {
     messageText.push(getRandomElement(MESSAGES));
   }
 
   return {
     id: getCommentId(),
-    avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
+    avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
     message: messageText.join(''),
     name: getRandomElement(NAMES)
   };
 }
 
 function generateDescription() {
-  const comments = Array.from({length: getRandomInt(0, 7)}, generateComment);
+  const comments = Array.from({length: getRandomPositiveInteger(0, 7)}, generateComment);
   const id = getCommentId();
   return {
     id: id,

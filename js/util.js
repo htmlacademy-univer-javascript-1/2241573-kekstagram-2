@@ -1,32 +1,27 @@
-function getRandomInt(from, to)
-/**
- * Генерация случайного положительного числа
- * @param {int} from - минимальное число из диапазона
- * @param {int} to - максимальное число из диапазона
- * @returns {int} - случаное число
- */
-{
+const ALERT_SHOW_TIME = 7000;
 
-  if (from < 0 || to < 0) {
-    throw new RangeError('Числа в диапазоне должны быть положительными');
-  }
-
-  if (typeof from === 'string' || typeof to === 'string') {
-    throw new RangeError('Значения должны быть числами, а не строкой');
-  }
-
-  if (typeof from === 'number' || typeof to === 'string') {
-    if (from === to) {
-      return from;
-    }
-    if (from > to) {
-      [from, to] = [to, from];
-    }
-    return Math.round(Math.random() * (to - from) + from);
-  }
-
+function getRandomPositiveInteger(a, b) {
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
 }
+//Функция, генерирующаю число,которое не повторяется из диапазона включительно
+function createRandom(min, max) {
+  const previousValues = [];
 
+  return function () {
+    let currentValue = getRandomPositiveInteger(min, max);
+    if (previousValues.length >= (max - min + 1)) {
+      return null;
+    }
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomPositiveInteger(min, max);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+}
 
 const isCorrectLength = (str, maxLenght) => str.length <= maxLenght;
 /**
@@ -36,4 +31,44 @@ const isCorrectLength = (str, maxLenght) => str.length <= maxLenght;
  * @returns {int} - true либо false
  */
 
-export {getRandomInt};
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = '100';
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = '#ff4e4e';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+// функция блока кнопки отправки данных
+const blockSubmitButton = (submitButton) => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Подождите';
+};
+
+const unblockSubmitButton = (submitButton) => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+function debounce(callback, timeoutDelay) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+export {getRandomPositiveInteger, createRandom, showAlert, blockSubmitButton, unblockSubmitButton, debounce};

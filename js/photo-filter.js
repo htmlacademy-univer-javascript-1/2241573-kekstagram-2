@@ -24,13 +24,13 @@ noUiSlider.create(slider, {
   connect: 'lower',
 });
 
-function effectСhoice(value, update) {
-  img.className = '';
+function effectСhoice(value,update){
+  img.className='';
   img.classList.add(`effects__preview--${value}`);
   slider.noUiSlider.updateOptions({
     range: {
       min: update[0],
-      max: update[1],
+      max:update[1],
     },
     start: 100,
     step: update[2],
@@ -45,16 +45,16 @@ function effectСhoice(value, update) {
     img.style.filter = `${update[3]}(${sliderValue.value}${update[4]})`;
   });
 }
-
-function effectUser() {
+function effectUser(){
   effectList.forEach((effectElement) => {
     const effectClick = String(effectElement.value);
     sliderElement.classList.add('hidden');
-    effectElement.addEventListener('change', () => {
-      effectСhoice(effectClick, filterUpdate[effectClick]);
+    effectElement.addEventListener( 'change',() =>{
+      effectСhoice(effectClick,filterUpdate[effectClick]);
       if (effectClick !== 'none') { sliderElement.classList.remove('hidden'); }
       else { sliderElement.classList.add('hidden'); }
     },);
   });
 }
 effectUser();
+export {effectList, sliderValue, slider, sliderElement, img};
