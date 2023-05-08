@@ -23,7 +23,7 @@ const createMiniatures = (description) => {
   miniaturesList.appendChild(miniaturesFragment);
 
 };
-createMiniatures(description);
+//createMiniatures(description);
 
 
-export {createMiniatures,miniaturesList};
+export {createMiniatures, miniaturesList};

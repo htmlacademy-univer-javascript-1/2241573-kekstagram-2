@@ -58,3 +58,5 @@ function effectUser() {
   });
 }
 effectUser();
+
+export {effectList,sliderValue,slider,sliderElement,img};

@@ -1,3 +1,6 @@
+const MAX_HASHTAG_NUMBERS = 5;
+const MAX_COMMENTS_LENGTH = 140;
+
 const input = document.querySelector('.text__hashtags');
 const inputComments = document.querySelector('.text__description');
 //отмена escape для хештегов и комментов
@@ -7,6 +10,15 @@ input.addEventListener('keydown', (evt) => {
     evt.stopPropagation();
   }
 });
+
+function commentLength (){
+  const injectedСomments = inputComments.value;
+  if (injectedСomments.length > MAX_COMMENTS_LENGTH){
+    return false;
+  }
+  return true;
+}
+
 inputComments.addEventListener('keydown', (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
@@ -16,7 +28,7 @@ inputComments.addEventListener('keydown', (evt) => {
 //валидация хештегов
 //Проверка символов
 function isEveryHashtagSymbolsValid(elem) {
-  const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+  const re = /^((#[A-Za-zА-Яа-яЁё0-9]{1,19})\s*|)+$$/;
   return re.test(elem);
 }
 function isHashtagSymbolsValid() {
@@ -28,7 +40,7 @@ function isHashtagSymbolsValid() {
 //проверка, что их не больше 5
 function isAmountValid() {
   const hashtags = input.value.toLowerCase().split(' ');
-  if (hashtags.length <= 5) { return true; }
+  if (hashtags.length <= MAX_HASHTAG_NUMBERS) { return true; }
   else { return false; }
 }
 //Проверка уникальности хештега
@@ -43,9 +55,10 @@ function areHashtagsUnique() {
 
 function hashtagsValid(value) {
   const hashtags = value.toLowerCase().trim().split(' ');
-  if (isAmountValid(hashtags) && areHashtagsUnique(hashtags) && isHashtagSymbolsValid(hashtags)) {
+  const injectedСomments = input.value.toLowerCase().trim().split(' ');
+  if (isAmountValid(hashtags) && areHashtagsUnique(hashtags) && isHashtagSymbolsValid(hashtags) && commentLength(injectedСomments)) {
     return true;
   }
   else { return false; }
 }
-export{input, hashtagsValid, inputComments};
+export {input, hashtagsValid, inputComments, isEveryHashtagSymbolsValid, isAmountValid, areHashtagsUnique, commentLength};
