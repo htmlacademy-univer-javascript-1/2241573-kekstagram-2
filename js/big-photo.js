@@ -28,19 +28,6 @@ const createCommentPhotoUser = (commentsInfo) => {
   return commentFragment;
 };
 
-const createCommentPhotoUser = (commentsInfo) => {
-  const commentFragment = document.createDocumentFragment();
-  commentsInfo.forEach(({ avatar, name, message
-  }) => {
-    const comment = commentTemplate.cloneNode(true);
-    comment.querySelector('img').src=avatar;
-    comment.querySelector('img').alt=name;
-    comment.querySelector('p').textContent=message;
-    commentFragment.append(comment);
-  });
-  return commentFragment;
-};
-
 //функции взаимодействия с фото
 const openBigPicture = () => {
   activeImg.classList.remove('hidden');
